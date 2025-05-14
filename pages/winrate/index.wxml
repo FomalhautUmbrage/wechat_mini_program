@@ -1,3 +1,5 @@
+// 修复 pages/winrate/index.wxml 文件中的标签颜色问题
+
 <t-navbar title="胜率查询" left-arrow />
 <view class="winrate-page">
   <!-- Header with search -->
@@ -58,11 +60,11 @@
           <text style="margin-left: 8rpx;">平: {{item.draws}}</text>
         </view>
         
-        <!-- Win rate badge on right -->
+        <!-- 修改后的胜率标签 - 直接使用CSS类控制颜色 -->
         <view slot="right-icon">
-          <t-tag theme="{{index < 3 ? 'warning' : 'primary'}}" variant="light" class="winrate-tag">
+          <view class="{{index < 3 ? 'rank-tag rank-tag-red' : (index < 10 ? 'rank-tag rank-tag-orange' : (index < 20 ? 'rank-tag rank-tag-purple' : 'rank-tag rank-tag-blue'))}}">
             {{item.winRate}}%
-          </t-tag>
+          </view>
         </view>
       </t-cell>
     </t-cell-group>

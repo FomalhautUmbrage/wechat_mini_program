@@ -1,3 +1,5 @@
+/* 修改 pages/winrate/index.less 文件，添加自定义胜率标签样式 */
+
 @import '/variable.less';
 
 .winrate-page {
@@ -130,8 +132,45 @@
   background-color: rgba(255, 215, 0, 0.1);
 }
 
-.winrate-tag {
+/* 自定义胜率标签样式 */
+.rank-tag {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16rpx;
+  height: 48rpx;
+  border-radius: 6rpx;
+  font-size: 24rpx;
+  font-weight: 600;
   margin-left: 16rpx;
+}
+
+/* 红色标签（前三名） */
+.rank-tag-red {
+  color: #d54941;
+  background-color: rgba(213, 73, 65, 0.1);
+  border: 1rpx solid rgba(213, 73, 65, 0.3);
+}
+
+/* 橙色标签（4-10名） */
+.rank-tag-orange {
+  color: #ed7b2f;
+  background-color: rgba(237, 123, 47, 0.1);
+  border: 1rpx solid rgba(237, 123, 47, 0.3);
+}
+
+/* 紫色标签（11-20名） */
+.rank-tag-purple {
+  color: #722ed1;
+  background-color: rgba(114, 46, 209, 0.1);
+  border: 1rpx solid rgba(114, 46, 209, 0.3);
+}
+
+/* 蓝色标签（20名以后） */
+.rank-tag-blue {
+  color: #0052d9;
+  background-color: rgba(0, 82, 217, 0.1);
+  border: 1rpx solid rgba(0, 82, 217, 0.3);
 }
 
 /* Animation */

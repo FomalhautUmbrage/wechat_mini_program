@@ -1,3 +1,4 @@
+// pages/rankings/index.js - 使用更彻底的动画重置方案
 import Toast from 'tdesign-miniprogram/toast/index';
 const XLSX = require('../../utils/xlsx.js');
 
@@ -22,22 +23,13 @@ Page({
       { value: 'all', label: '全部' },
     ],
     timeFilterVisible: false,
-    
-    // Methods to handle time filter:
-    toggleTimeFilter() {
-      this.setData({ timeFilterVisible: !this.data.timeFilterVisible });
-    },
-    
-    onTimeFilterVisibleChange(e) {
-      this.setData({ timeFilterVisible: e.detail.visible });
-    },
-    
-    handleTimeOptionChange(e) {
-      const { value, label } = e.currentTarget.dataset;
-      this.setData({ timeRange: label, currentTimeRange: value, timeFilterVisible: false });
-      // Process data based on the selected time range
-      this.processRankingData(this.data.currentRankingField);
-    }
+    rankings: [],
+    // 关键修改: 不再使用animationClass, 而是使用一个组件可见性标记
+    podiumVisible: true,
+    animationKey: Date.now(), // 添加一个随机key用于强制刷新
+    loading: false,
+    playerData: [],
+    excelFileName: ''
   },
 
   onLoad() {
@@ -49,9 +41,20 @@ Page({
   },
 
   onShow() {
-    // 每次进入页面时，根据当前选择刷新排行榜数据并重播动画
+    // 更新标签栏选中项
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().setData({
+        value: 'rankings'
+      });
+    }
+
+    // 每次返回此页面时，刷新数据并重新播放动画
     if (this.data.playerData && this.data.playerData.length > 0) {
-      this.processRankingData(this.data.currentRankingField);
+      // 先处理数据
+      this.updateRankingData(this.data.currentRankingField);
+      
+      // 然后强制重新渲染以触发动画
+      this.forceRerenderPodium();
     }
   },
 
@@ -60,6 +63,22 @@ Page({
     if (app.eventBus) {
       app.eventBus.off('rankings-data-updated');
     }
+  },
+
+  // 更彻底的重新渲染方法：先隐藏组件，再显示它
+  forceRerenderPodium() {
+    // 先隐藏排行榜组件
+    this.setData({
+      podiumVisible: false
+    });
+    
+    // 短暂延迟后再显示，强制完全重新渲染DOM
+    setTimeout(() => {
+      this.setData({
+        podiumVisible: true,
+        animationKey: Date.now() // 更新key触发完全重新渲染
+      });
+    }, 50);
   },
 
   checkExcelData() {
@@ -97,7 +116,7 @@ Page({
             loading: false
           });
           // 初次加载数据后，按照默认类别刷新排行榜
-          this.processRankingData(this.data.currentRankingField);
+          this.updateRankingData(this.data.currentRankingField);
           Toast({ context: this, message: '已加载排行榜数据', theme: 'success' });
         } catch (e) {
           console.error(e);
@@ -113,11 +132,21 @@ Page({
     });
   },
 
-  // 处理排行榜数据排序和筛选，并触发动画
-  processRankingData(type) {
+  // 简化的数据处理方法，只负责更新数据，不处理动画
+  updateRankingData(type) {
     if (!this.data.playerData || this.data.playerData.length === 0) {
       return;
     }
+    
+    // 保存当前排名字段以确保一致性
+    this.setData({ currentRankingField: type });
+    
+    // 根据当前类型设置排名类型标签
+    const selectedOption = this.data.rankingOptions.find(option => option.value === type);
+    if (selectedOption) {
+      this.setData({ rankingType: selectedOption.label });
+    }
+    
     const timeframe = this.data.currentTimeRange || 'all';
     // 基于原始数据进行排序和筛选
     let list = [...this.data.playerData];
@@ -137,7 +166,6 @@ Page({
         count = Math.min(20, list.length);
         factor = 0.7;
       }
-      // 取出限定数量的 top 玩家，并按比例缩减其值以模拟对应时间范围的统计
       filtered = list.slice(0, count).map(player => {
         const scaledValue = Math.round(player[type] * factor);
         return {
@@ -147,48 +175,59 @@ Page({
       });
       list = filtered;
     }
+    
     // 按当前类别对处理后的列表排序
     list.sort((a, b) => b[type] - a[type]);
     const arr = list.map(p => ({ name: p.name, avatar: p.avatar, value: p[type] }));
-    // 如果筛选后无数据，显示无数据状态
+    
     if (arr.length === 0) {
-      this.setData({ rankings: [], hasData: false, animationClass: '' });
+      this.setData({ rankings: [], hasData: false });
       return;
     } else {
-      // 确保有数据时标识为 true
       if (!this.data.hasData) {
         this.setData({ hasData: true });
       }
     }
-    // 重置动画类以触发重新播放
-    this.setData({ animationClass: '' });
-    setTimeout(() => {
-      this.setData({ rankings: arr, animationClass: 'animate-in' });
-    }, 50);
+    
+    // 只更新数据
+    this.setData({ rankings: arr });
   },
 
   toggleDropdown() {
     this.setData({ visible: !this.data.visible });
   },
+  
   onVisibleChange(e) {
     this.setData({ visible: e.detail.visible });
   },
+  
   handleOptionChange(e) {
     const { value, label } = e.currentTarget.dataset;
     this.setData({ rankingType: label, currentRankingField: value, visible: false });
-    this.processRankingData(value);
+    
+    // 先更新数据
+    this.updateRankingData(value);
+    
+    // 然后重新渲染组件
+    this.forceRerenderPodium();
   },
 
   toggleTimeFilter() {
     this.setData({ timeFilterVisible: !this.data.timeFilterVisible });
   },
+  
   onTimeFilterVisibleChange(e) {
     this.setData({ timeFilterVisible: e.detail.visible });
   },
+  
   handleTimeOptionChange(e) {
     const { value, label } = e.currentTarget.dataset;
     this.setData({ timeRange: label, currentTimeRange: value, timeFilterVisible: false });
-    // 切换时间范围后根据当前排行类别刷新数据
-    this.processRankingData(this.data.currentRankingField);
+    
+    // 先更新数据
+    this.updateRankingData(this.data.currentRankingField);
+    
+    // 然后重新渲染组件
+    this.forceRerenderPodium();
   }
 });

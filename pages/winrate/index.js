@@ -1,4 +1,4 @@
-// pages/winrate/index.js - updated to better handle Excel file data
+// pages/winrate/index.js - 完整的修改版
 import Toast from 'tdesign-miniprogram/toast/index';
 const XLSX = require('../../utils/xlsx.js');
 
@@ -24,6 +24,19 @@ Page({
     }
     // Refresh the data when the page is shown
     this.checkExcelData();
+  },
+
+  // 新增：根据排名返回对应的主题颜色
+  getThemeByRank(index) {
+    if (index < 3) {
+      return 'danger';  // 前三名用红色
+    } else if (index < 10) {
+      return 'warning'; // 第4-10名用橙色
+    } else if (index < 20) {
+      return 'purple';  // 第11-20名用紫色
+    } else {
+      return 'primary'; // 其余用蓝色
+    }
   },
 
   checkExcelData() {

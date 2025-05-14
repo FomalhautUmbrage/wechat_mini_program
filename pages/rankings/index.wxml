@@ -1,3 +1,4 @@
+<!-- 对 pages/rankings/index.wxml 文件的修改 -->
 <t-navbar title="排行榜" left-arrow />
 <view class="rankings-page">
   <!-- Top dropdown selector -->
@@ -66,61 +67,64 @@
     <text class="loading-text">数据加载中...</text>
   </view>
 
-  <!-- Top 3 podium visualization with animation class -->
-  <view class="podium-container {{animationClass}}" wx:if="{{hasData && !loading}}">
-    <!-- Second place - left -->
-    <view class="podium-item second">
-      <view class="rank-avatar">
-        <t-avatar wx:if="{{rankings.length > 1}}" image="{{rankings[1].avatar}}" size="large"></t-avatar>
+  <!-- 关键修改：使用wx:if而不是CSS类进行控制，通过key属性强制重新渲染 -->
+  <block wx:if="{{hasData && !loading}}">
+    <!-- 使用podiumVisible控制显示，并使用animationKey强制重新渲染 -->
+    <view wx:if="{{podiumVisible}}" class="podium-container animate-in" data-key="{{animationKey}}">
+      <!-- Second place - left -->
+      <view class="podium-item second">
+        <view class="rank-avatar">
+          <t-avatar wx:if="{{rankings.length > 1}}" image="{{rankings[1].avatar}}" size="large"></t-avatar>
+        </view>
+        <view class="podium-block">
+          <view class="podium-number">2</view>
+          <view class="podium-name" wx:if="{{rankings.length > 1}}">{{rankings[1].name}}</view>
+          <view class="podium-value" wx:if="{{rankings.length > 1}}">{{rankings[1].value}}</view>
+        </view>
       </view>
-      <view class="podium-block">
-        <view class="podium-number">2</view>
-        <view class="podium-name" wx:if="{{rankings.length > 1}}">{{rankings[1].name}}</view>
-        <view class="podium-value" wx:if="{{rankings.length > 1}}">{{rankings[1].value}}</view>
+
+      <!-- First place - middle (taller) -->
+      <view class="podium-item first">
+        <view class="rank-avatar">
+          <t-avatar wx:if="{{rankings.length > 0}}" image="{{rankings[0].avatar}}" size="large"></t-avatar>
+        </view>
+        <view class="podium-block">
+          <view class="podium-number">1</view>
+          <view class="podium-name" wx:if="{{rankings.length > 0}}">{{rankings[0].name}}</view>
+          <view class="podium-value" wx:if="{{rankings.length > 0}}">{{rankings[0].value}}</view>
+        </view>
+      </view>
+
+      <!-- Third place - right -->
+      <view class="podium-item third">
+        <view class="rank-avatar">
+          <t-avatar wx:if="{{rankings.length > 2}}" image="{{rankings[2].avatar}}" size="large"></t-avatar>
+        </view>
+        <view class="podium-block">
+          <view class="podium-number">3</view>
+          <view class="podium-name" wx:if="{{rankings.length > 2}}">{{rankings[2].name}}</view>
+          <view class="podium-value" wx:if="{{rankings.length > 2}}">{{rankings[2].value}}</view>
+        </view>
       </view>
     </view>
 
-    <!-- First place - middle (taller) -->
-    <view class="podium-item first">
-      <view class="rank-avatar">
-        <t-avatar wx:if="{{rankings.length > 0}}" image="{{rankings[0].avatar}}" size="large"></t-avatar>
-      </view>
-      <view class="podium-block">
-        <view class="podium-number">1</view>
-        <view class="podium-name" wx:if="{{rankings.length > 0}}">{{rankings[0].name}}</view>
-        <view class="podium-value" wx:if="{{rankings.length > 0}}">{{rankings[0].value}}</view>
-      </view>
+    <!-- 排名列表也添加key属性实现强制重新渲染 -->
+    <view class="rankings-list animate-in" data-key="{{animationKey}}">
+      <t-cell-group>
+        <t-cell
+          wx:for="{{rankings}}"
+          wx:key="index"
+          wx:if="{{index > 2}}"
+          hover
+          bordered="{{index !== rankings.length - 1}}"
+        >
+          <view slot="left-icon" class="rank-number">{{index + 1}}</view>
+          <view slot="title" class="rank-name">{{item.name}}</view>
+          <view slot="description" class="rank-value">{{rankingType}}: {{item.value}}</view>
+          <t-avatar slot="right-icon" image="{{item.avatar}}" size="small"></t-avatar>
+        </t-cell>
+      </t-cell-group>
     </view>
-
-    <!-- Third place - right -->
-    <view class="podium-item third">
-      <view class="rank-avatar">
-        <t-avatar wx:if="{{rankings.length > 2}}" image="{{rankings[2].avatar}}" size="large"></t-avatar>
-      </view>
-      <view class="podium-block">
-        <view class="podium-number">3</view>
-        <view class="podium-name" wx:if="{{rankings.length > 2}}">{{rankings[2].name}}</view>
-        <view class="podium-value" wx:if="{{rankings.length > 2}}">{{rankings[2].value}}</view>
-      </view>
-    </view>
-  </view>
-
-  <!-- Remaining rankings list with animation class -->
-  <view class="rankings-list {{animationClass}}" wx:if="{{hasData && !loading}}">
-    <t-cell-group>
-      <t-cell
-        wx:for="{{rankings}}"
-        wx:key="index"
-        wx:if="{{index > 2}}"
-        hover
-        bordered="{{index !== rankings.length - 1}}"
-      >
-        <view slot="left-icon" class="rank-number">{{index + 1}}</view>
-        <view slot="title" class="rank-name">{{item.name}}</view>
-        <view slot="description" class="rank-value">{{rankingType}}: {{item.value}}</view>
-        <t-avatar slot="right-icon" image="{{item.avatar}}" size="small"></t-avatar>
-      </t-cell>
-    </t-cell-group>
-  </view>
+  </block>
 </view>
 <t-toast id="t-toast" />
