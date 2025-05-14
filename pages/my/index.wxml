@@ -1,5 +1,3 @@
-<t-toast id="t-toast" />
-
 <view class="my">
   <image class="nav-bg" src="/static/bg_navbar.png" />
   <nav title-text="我的" />
@@ -42,6 +40,27 @@
     </t-grid>
   </view>
 
+  <!-- 排行榜数据管理功能区块 (所有人可见) -->
+  <view class="my-admin">
+    <view class="my-admin--tips">排行榜数据管理</view>
+    <t-cell-group theme="card">
+      <t-cell
+        title="上传排行榜数据"
+        hover
+        arrow
+        leftIcon="upload"
+        bind:click="onUploadExcel"
+      />
+      <t-cell
+        title="查看排行榜"
+        hover
+        arrow
+        leftIcon="chart"
+        bind:click="onViewRankings"
+      />
+    </t-cell-group>
+  </view>
+
   <view class="my-service">
     <view class="my-service--tips">推荐服务</view>
     <t-grid column="{{4}}" class="my-service__list">
@@ -73,3 +92,16 @@
     />
   </t-cell-group>
 </view>
+
+<t-toast id="t-toast" />
+
+<!-- 添加Excel文件上传弹窗 -->
+<t-dialog
+  visible="{{showUploadDialog}}"
+  title="上传排行榜数据"
+  content="请选择Excel文件(.xlsx或.xls格式)"
+  confirm-btn="选择文件"
+  cancel-btn="取消"
+  bind:confirm="selectExcelFile"
+  bind:cancel="closeUploadDialog"
+/>

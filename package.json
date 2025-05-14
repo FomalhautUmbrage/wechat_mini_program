@@ -19,7 +19,8 @@
   "description": "a start-kit for wechat miniprogram powerby TDesign miniprogram",
   "dependencies": {
     "@vant/weapp": "^1.11.7",
-    "tdesign-miniprogram": "^1.8.6"
+    "tdesign-miniprogram": "^1.8.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "eslint": "^8.49.0",

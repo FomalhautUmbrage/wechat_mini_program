@@ -25,6 +25,20 @@
   color: @gy1;
 }
 
+.excel-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: @gy3;
+}
+
+.excel-info t-icon {
+  margin-right: 8rpx;
+  color: #0052d9;
+}
+
 .popup-content {
   width: 100vw;
   background-color: white;
@@ -41,6 +55,38 @@
 .popup-item.active {
   color: @brand7-normal;
   font-weight: 600;
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  background-color: @bg-color-white;
+  margin-top: 24rpx;
+}
+
+.no-data-tips {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: @gy3;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 32rpx;
+  background-color: @bg-color-white;
+  margin-top: 24rpx;
+}
+
+.loading-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: @gy2;
 }
 
 .podium-container {
@@ -74,24 +120,53 @@
   align-items: center;
   padding-top: 60rpx;
   background-color: @bg-color;
+  transform-origin: bottom;
+}
+
+@keyframes riseUp {
+  from {
+    transform: scaleY(0);
+    opacity: 0.7;
+  }
+  to {
+    transform: scaleY(1);
+    opacity: 1;
+  }
 }
 
 .first .podium-block {
   height: 320rpx;
   background-color: #FFD700;
   color: @gy1;
+  animation: riseUp 0.8s ease-out 0.1s forwards;
+  transform: scaleY(0);
 }
 
 .second .podium-block {
   height: 240rpx;
   background-color: #C0C0C0;
   color: @gy1;
+  animation: riseUp 0.7s ease-out 0.3s forwards;
+  transform: scaleY(0);
 }
 
 .third .podium-block {
   height: 180rpx;
   background-color: #CD7F32;
   color: @gy1;
+  animation: riseUp 0.6s ease-out 0.5s forwards;
+  transform: scaleY(0);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .podium-number {
@@ -99,6 +174,8 @@
   font-weight: bold;
   line-height: 1;
   margin-bottom: 16rpx;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 0.8s forwards;
 }
 
 .podium-name {
@@ -111,11 +188,15 @@
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1s forwards;
 }
 
 .podium-value {
   font-size: 24rpx;
   font-weight: 500;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 1.2s forwards;
 }
 
 .rankings-list {
@@ -147,4 +228,50 @@
   font-size: 28rpx;
   color: @gy2;
   margin-top: 8rpx;
+}
+
+/* Animation for the list items */
+.rankings-list .t-cell {
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.rankings-list .t-cell:nth-child(1) {
+  animation-delay: 1.3s;
+}
+
+.rankings-list .t-cell:nth-child(2) {
+  animation-delay: 1.4s;
+}
+
+.rankings-list .t-cell:nth-child(3) {
+  animation-delay: 1.5s;
+}
+
+.rankings-list .t-cell:nth-child(4) {
+  animation-delay: 1.6s;
+}
+
+.rankings-list .t-cell:nth-child(5) {
+  animation-delay: 1.7s;
+}
+
+.rankings-list .t-cell:nth-child(6) {
+  animation-delay: 1.8s;
+}
+
+.rankings-list .t-cell:nth-child(7) {
+  animation-delay: 1.9s;
+}
+
+.rankings-list .t-cell:nth-child(8) {
+  animation-delay: 2.0s;
+}
+
+.rankings-list .t-cell:nth-child(9) {
+  animation-delay: 2.1s;
+}
+
+.rankings-list .t-cell:nth-child(10) {
+  animation-delay: 2.2s;
 }

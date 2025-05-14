@@ -7,6 +7,8 @@
       "t-avatar": "tdesign-miniprogram/avatar/avatar",
       "t-loading": "tdesign-miniprogram/loading/loading",
       "t-icon": "tdesign-miniprogram/icon/icon",
-      "t-popup": "tdesign-miniprogram/popup/popup"
+      "t-popup": "tdesign-miniprogram/popup/popup",
+      "t-button": "tdesign-miniprogram/button/button",
+      "t-toast": "tdesign-miniprogram/toast/toast"
     }
   }

@@ -27,6 +27,7 @@ App({
         },
       });
     });
+    
 
     this.getUnreadNum();
     this.connect();

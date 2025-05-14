@@ -7,6 +7,12 @@
       <t-icon name="caret-down-small" size="48rpx" />
     </view>
     
+    <!-- 显示当前Excel文件名称 -->
+    <view class="excel-info" wx:if="{{excelFileName}}">
+      <t-icon name="file-excel" size="32rpx" />
+      <text>{{excelFileName}}</text>
+    </view>
+    
     <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="top">
       <view class="popup-content">
         <view 
@@ -23,8 +29,20 @@
     </t-popup>
   </view>
 
-  <!-- Top 3 podium visualization -->
-  <view class="podium-container">
+  <!-- 无数据状态提示 -->
+  <view class="no-data-container" wx:if="{{!hasData && !loading}}">
+    <t-empty icon="info-circle-filled" description="暂无排行榜数据" />
+    <view class="no-data-tips">可以在"我的"页面上传排行榜数据</view>
+  </view>
+
+  <!-- Loading indicator -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <t-loading theme="circular" size="48rpx" />
+    <text class="loading-text">数据加载中...</text>
+  </view>
+
+  <!-- Top 3 podium visualization with animation class -->
+  <view class="podium-container {{animationClass}}" wx:if="{{hasData && !loading}}">
     <!-- Second place - left -->
     <view class="podium-item second">
       <view class="rank-avatar">
@@ -62,8 +80,8 @@
     </view>
   </view>
 
-  <!-- Remaining rankings list -->
-  <view class="rankings-list">
+  <!-- Remaining rankings list with animation class -->
+  <view class="rankings-list {{animationClass}}" wx:if="{{hasData && !loading}}">
     <t-cell-group>
       <t-cell
         wx:for="{{rankings}}"
@@ -80,3 +98,5 @@
     </t-cell-group>
   </view>
 </view>
+
+<t-toast id="t-toast" />

@@ -12,7 +12,8 @@
 
   &-info,
   &-service,
-  &-setting {
+  &-setting,
+  &-admin {
     background-color: #fff;
   }
 
@@ -71,6 +72,24 @@
       .tag:not(:last-child) {
         margin-right: 16rpx;
       }
+    }
+  }
+
+  /* 添加管理员功能区块样式 */
+  &-admin {
+    border-radius: 24rpx;
+    margin: 32rpx;
+    padding-bottom: 8rpx;
+    overflow: hidden;
+
+    &--tips {
+      height: 44rpx;
+      line-height: 44rpx;
+      padding-left: 40rpx;
+      margin-top: 32rpx;
+      color: #000000e6;
+      font-size: 28rpx;
+      font-weight: 600;
     }
   }
 
