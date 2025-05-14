@@ -13,7 +13,8 @@
       <text>{{excelFileName}}</text>
     </view>
     
-    <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="top">
+    <!-- 下拉选项列表，placement改为bottom使其向下展开 -->
+    <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="bottom">
       <view class="popup-content">
         <view 
           class="popup-item {{item.label === rankingType ? 'active' : ''}}" 
