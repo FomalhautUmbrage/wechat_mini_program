@@ -3,7 +3,9 @@
     "pages/rankings/index",
     "pages/home/index",
     "pages/message/index",
-    "pages/my/index"
+    "pages/my/index",
+    "pages/winrate/index",
+    "pages/points/index"
   ],
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast"
@@ -68,12 +70,20 @@
         "text": "消息"
       },
       {
-        "pagePath": "pages/my/index",
-        "text": "我的"
-      },
-      {
         "pagePath": "pages/rankings/index",
         "text": "排行榜"
+      },
+      {
+        "pagePath": "pages/points/index",
+        "text": "积分"
+      },
+      {
+        "pagePath": "pages/winrate/index",
+        "text": "胜率查询"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "text": "我的"
       }
     ]
   },

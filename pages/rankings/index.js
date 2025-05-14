@@ -21,11 +21,23 @@ Page({
       { value: 'month', label: '过去一个月' },
       { value: 'all', label: '全部' },
     ],
-    rankings: [],
-    loading: false,
-    animationClass: 'animate-in',
-    playerData: [],
-    excelFileName: ''
+    timeFilterVisible: false,
+    
+    // Methods to handle time filter:
+    toggleTimeFilter() {
+      this.setData({ timeFilterVisible: !this.data.timeFilterVisible });
+    },
+    
+    onTimeFilterVisibleChange(e) {
+      this.setData({ timeFilterVisible: e.detail.visible });
+    },
+    
+    handleTimeOptionChange(e) {
+      const { value, label } = e.currentTarget.dataset;
+      this.setData({ timeRange: label, currentTimeRange: value, timeFilterVisible: false });
+      // Process data based on the selected time range
+      this.processRankingData(this.data.currentRankingField);
+    }
   },
 
   onLoad() {

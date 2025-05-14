@@ -1,0 +1,72 @@
+<t-navbar title="胜率查询" left-arrow />
+<view class="winrate-page">
+  <!-- Header with search -->
+  <view class="header-container">
+    <view class="header-title">
+      <text>英雄胜率排行</text>
+    </view>
+    
+    <!-- Search box -->
+    <view class="search-container">
+      <t-search
+        value="{{searchValue}}"
+        placeholder="搜索英雄名称"
+        bind:change="onSearch"
+        bind:submit="onSearch"
+      />
+    </view>
+    
+    <!-- Current Excel file info -->
+    <view class="excel-info" wx:if="{{excelFileName}}">
+      <t-icon name="file-excel" size="32rpx" />
+      <text>{{excelFileName}}</text>
+    </view>
+  </view>
+
+  <!-- No data state -->
+  <view class="no-data-container" wx:if="{{!hasData && !loading}}">
+    <t-empty icon="info-circle-filled" description="暂无英雄数据" />
+    <view class="no-data-tips">请在"我的"页面上传英雄胜率数据</view>
+  </view>
+
+  <!-- Loading indicator -->
+  <view class="loading-container" wx:if="{{loading}}">
+    <t-loading theme="circular" size="48rpx" />
+    <text class="loading-text">数据加载中...</text>
+  </view>
+
+  <!-- Hero list -->
+  <view class="hero-list" wx:if="{{hasData && !loading}}">
+    <t-cell-group>
+      <t-cell
+        wx:for="{{filteredHeroList}}"
+        wx:key="name"
+        hover
+        t-class="{{index < 3 ? 'top-hero' : ''}}"
+      >
+        <!-- Rank number -->
+        <view slot="left-icon" class="rank-number">{{index + 1}}</view>
+        
+        <!-- Hero name -->
+        <view slot="title" class="hero-name">{{item.name}}</view>
+        
+        <!-- Stats with progress bar -->
+        <view slot="description" class="hero-stats">
+          <text>场次: {{item.totalGames}}</text>
+          <text style="margin-left: 16rpx;">胜: {{item.wins}}</text>
+          <text style="margin-left: 8rpx;">负: {{item.losses}}</text>
+          <text style="margin-left: 8rpx;">平: {{item.draws}}</text>
+        </view>
+        
+        <!-- Win rate badge on right -->
+        <view slot="right-icon">
+          <t-tag theme="{{index < 3 ? 'warning' : 'primary'}}" variant="light" class="winrate-tag">
+            {{item.winRate}}%
+          </t-tag>
+        </view>
+      </t-cell>
+    </t-cell-group>
+  </view>
+</view>
+
+<t-toast id="t-toast" />

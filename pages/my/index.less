@@ -11,9 +11,7 @@
   }
 
   &-info,
-  &-service,
-  &-setting,
-  &-admin {
+  &-upload {
     background-color: #fff;
   }
 
@@ -30,23 +28,6 @@
     .cell-class-center {
       display: flex;
       align-items: center !important;
-    }
-
-    .divider-class {
-      margin-top: 0 !important;
-      margin-bottom: 0 !important;
-    }
-
-    .grid-class {
-      margin-top: 40rpx;
-    }
-
-    .grid-item .t-grid-item__content {
-      padding: 0px !important;
-    }
-
-    .split-line {
-      border-right: 1px solid #e7e7e7;
     }
 
     // 头像margin-right
@@ -75,38 +56,12 @@
     }
   }
 
-  /* 添加管理员功能区块样式 */
-  &-admin {
+  /* 数据上传功能区块样式 */
+  &-upload {
     border-radius: 24rpx;
     margin: 32rpx;
     padding-bottom: 8rpx;
     overflow: hidden;
-
-    &--tips {
-      height: 44rpx;
-      line-height: 44rpx;
-      padding-left: 40rpx;
-      margin-top: 32rpx;
-      color: #000000e6;
-      font-size: 28rpx;
-      font-weight: 600;
-    }
-  }
-
-  &-service {
-    border-radius: 24rpx;
-    margin: 32rpx;
-    padding-bottom: 8rpx;
-    overflow: hidden;
-
-    &__list-item {
-      .t-grid-item__content {
-        padding-bottom: 16rpx !important;
-      }
-      .t-grid-item__text {
-        height: 40rpx !important;
-      }
-    }
 
     &--tips {
       height: 44rpx;

@@ -1,0 +1,180 @@
+@import '/variable.less';
+
+.winrate-page {
+  padding: 0;
+  background-color: @bg-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 120rpx;
+}
+
+.header-container {
+  background-color: @bg-color-white;
+  padding: 32rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  position: relative;
+}
+
+.header-title {
+  font-size: 36rpx;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: @gy1;
+  margin-bottom: 24rpx;
+}
+
+.search-container {
+  margin-bottom: 16rpx;
+}
+
+.excel-info {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: @gy3;
+}
+
+.excel-info t-icon {
+  margin-right: 8rpx;
+  color: #0052d9;
+}
+
+.upload-btn-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 16rpx;
+}
+
+.no-data-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 120rpx 32rpx;
+  background-color: @bg-color-white;
+  margin-top: 24rpx;
+}
+
+.no-data-tips {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: @gy3;
+}
+
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80rpx 32rpx;
+  background-color: @bg-color-white;
+  margin-top: 24rpx;
+}
+
+.loading-text {
+  margin-top: 24rpx;
+  font-size: 28rpx;
+  color: @gy2;
+}
+
+.hero-list {
+  margin-top: 24rpx;
+  flex: 1;
+  background-color: @bg-color-white;
+}
+
+.rank-number {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: @gy1;
+  margin-right: 16rpx;
+}
+
+.hero-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: @gy1;
+}
+
+.hero-stats {
+  font-size: 24rpx;
+  color: @gy2;
+  margin-top: 8rpx;
+  display: flex;
+  align-items: center;
+}
+
+.progress-container {
+  width: 240rpx;
+  margin-left: 16rpx;
+}
+
+.win-rate-text {
+  color: #0052d9;
+  font-weight: 600;
+  margin-left: 8rpx;
+}
+
+.top-hero {
+  background-color: rgba(255, 215, 0, 0.1);
+}
+
+.winrate-tag {
+  margin-left: 16rpx;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20rpx);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-list .t-cell {
+  opacity: 0;
+  animation: fadeIn 0.3s ease-out forwards;
+}
+
+.hero-list .t-cell:nth-child(1) {
+  animation-delay: 0.1s;
+}
+
+.hero-list .t-cell:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.hero-list .t-cell:nth-child(3) {
+  animation-delay: 0.2s;
+}
+
+.hero-list .t-cell:nth-child(4) {
+  animation-delay: 0.25s;
+}
+
+.hero-list .t-cell:nth-child(5) {
+  animation-delay: 0.3s;
+}
+
+.hero-list .t-cell:nth-child(6) {
+  animation-delay: 0.35s;
+}
+
+.hero-list .t-cell:nth-child(n+7) {
+  animation-delay: 0.4s;
+}

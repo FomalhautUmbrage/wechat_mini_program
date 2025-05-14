@@ -6,24 +6,24 @@ Component({
     unreadNum: 0, // 未读消息数量
     list: [
       {
-        icon: 'home',
-        value: 'index',
-        label: '首页',
+        icon: 'chart',
+        value: 'rankings',
+        label: '排行榜',
       },
       {
-        icon: 'chat',
-        value: 'notice',
-        label: '消息',
+        icon: 'star',
+        value: 'points',
+        label: '积分',
+      },
+      {
+        icon: 'chart-bubble',
+        value: 'winrate',
+        label: '胜率查询',
       },
       {
         icon: 'user',
         value: 'my',
         label: '我的',
-      },
-      {
-        icon: 'chart',
-        value: 'rankings',
-        label: '排行榜',
       },
     ],
   },

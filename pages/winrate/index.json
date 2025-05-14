@@ -1,0 +1,16 @@
+{
+    "navigationStyle": "custom",
+    "usingComponents": {
+      "t-navbar": "tdesign-miniprogram/navbar/navbar",
+      "t-search": "tdesign-miniprogram/search/search",
+      "t-cell": "tdesign-miniprogram/cell/cell",
+      "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+      "t-loading": "tdesign-miniprogram/loading/loading",
+      "t-empty": "tdesign-miniprogram/empty/empty",
+      "t-button": "tdesign-miniprogram/button/button",
+      "t-dialog": "tdesign-miniprogram/dialog/dialog",
+      "t-toast": "tdesign-miniprogram/toast/toast",
+      "t-progress": "tdesign-miniprogram/progress/progress",
+      "t-tag": "tdesign-miniprogram/tag/tag"
+    }
+  }

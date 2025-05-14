@@ -7,63 +7,26 @@ Page({
 
   data: {
     isLoad: false,
-    service: [],
     personalInfo: {},
-    gridList: [
-      {
-        name: '全部发布',
-        icon: 'root-list',
-        type: 'all',
-        url: '',
-      },
-      {
-        name: '审核中',
-        icon: 'search',
-        type: 'progress',
-        url: '',
-      },
-      {
-        name: '已发布',
-        icon: 'upload',
-        type: 'published',
-        url: '',
-      },
-      {
-        name: '草稿箱',
-        icon: 'file-copy',
-        type: 'draft',
-        url: '',
-      },
-    ],
-
-    settingList: [
-      { name: '联系客服', icon: 'service', type: 'service' },
-      { name: '设置', icon: 'setting', type: 'setting', url: '/pages/setting/index' },
-    ],
-    
-    showUploadDialog: false, // Excel上传弹窗显示状态
+    showUploadDialog: false, // 排行榜上传弹窗显示状态
+    showHeroUploadDialog: false, // 英雄胜率上传弹窗显示状态
   },
 
-  onLoad() {
-    this.getServiceList();
-  },
-
-  async onShow() {
-    const Token = wx.getStorageSync('access_token');
-    const personalInfo = await this.getPersonalInfo();
-
-    if (Token) {
-      this.setData({
-        isLoad: true,
-        personalInfo
+  onShow() {
+    if (typeof this.getTabBar === 'function') {
+      this.getTabBar().setData({
+        value: 'my'
       });
     }
-  },
-
-  getServiceList() {
-    request('/api/getServiceList').then((res) => {
-      const { service } = res.data.data;
-      this.setData({ service });
+    
+    const Token = wx.getStorageSync('access_token');
+    this.getPersonalInfo().then(personalInfo => {
+      if (Token) {
+        this.setData({
+          isLoad: true,
+          personalInfo
+        });
+      }
     });
   },
 
@@ -72,7 +35,7 @@ Page({
     return info;
   },
 
-  onLogin(e) {
+  onLogin() {
     wx.navigateTo({
       url: '/pages/login/login',
     });
@@ -82,14 +45,8 @@ Page({
     wx.navigateTo({ url: `/pages/my/info-edit/index` });
   },
 
-  onEleClick(e) {
-    const { name, url } = e.currentTarget.dataset.data;
-    if (url) return;
-    this.onShowToast('#t-toast', name);
-  },
-  
   /**
-   * 显示上传Excel对话框
+   * 显示上传排行榜Excel对话框
    */
   onUploadExcel() {
     this.setData({
@@ -175,12 +132,82 @@ Page({
   },
   
   /**
-   * 查看排行榜
+   * 显示上传英雄胜率Excel对话框
    */
-  onViewRankings() {
-    // 跳转到排行榜页面
-    wx.switchTab({
-      url: '/pages/rankings/index'
+  onUploadHeroData() {
+    this.setData({
+      showHeroUploadDialog: true
+    });
+  },
+  
+  /**
+   * 关闭英雄胜率上传对话框
+   */
+  closeHeroUploadDialog() {
+    this.setData({
+      showHeroUploadDialog: false
+    });
+  },
+  
+  /**
+   * 选择英雄胜率Excel文件并上传
+   */
+  selectHeroExcelFile() {
+    wx.chooseMessageFile({
+      count: 1,
+      type: 'file',
+      extension: ['xlsx', 'xls'],
+      success: (res) => {
+        const tempFilePath = res.tempFiles[0].path;
+        const fileName = res.tempFiles[0].name;
+        
+        // 将文件保存到本地
+        this.saveHeroExcelFile(tempFilePath, fileName);
+      },
+      fail: (err) => {
+        console.error('选择文件失败', err);
+        Toast({
+          context: this,
+          message: '选择文件失败',
+          theme: 'error',
+        });
+      },
+      complete: () => {
+        this.closeHeroUploadDialog();
+      }
+    });
+  },
+  
+  /**
+   * 保存英雄胜率Excel文件到本地存储
+   */
+  saveHeroExcelFile(tempFilePath, fileName) {
+    // 保存文件到本地存储路径
+    const fs = wx.getFileSystemManager();
+    const targetPath = `${wx.env.USER_DATA_PATH}/hero_winrate.xlsx`;
+    
+    fs.copyFile({
+      srcPath: tempFilePath,
+      destPath: targetPath,
+      success: () => {
+        // 保存文件路径到本地存储
+        wx.setStorageSync('heroExcelPath', targetPath);
+        wx.setStorageSync('heroExcelName', fileName);
+        
+        Toast({
+          context: this,
+          message: '英雄胜率数据上传成功',
+          theme: 'success',
+        });
+      },
+      fail: (err) => {
+        console.error('保存文件失败', err);
+        Toast({
+          context: this,
+          message: '数据保存失败',
+          theme: 'error',
+        });
+      }
     });
   }
 });

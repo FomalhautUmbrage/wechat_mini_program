@@ -25,24 +25,11 @@
         <t-avatar slot="left-icon" icon="user" size="128rpx" />
       </t-cell>
     </t-cell-group>
-    <t-divider t-class="divider-class" />
-    <t-grid t-class="grid-class">
-      <t-grid-item
-        wx:for="{{gridList}}"
-        wx:for-item="gridItem"
-        wx:key="type"
-        text="{{gridItem.name}}"
-        icon="{{gridItem.icon}}"
-        class="grid-item {{gridItem.type === 'all' ? 'split-line' : ''}}"
-        data-data="{{gridItem}}"
-        bindclick="onEleClick"
-      />
-    </t-grid>
   </view>
 
-  <!-- 排行榜数据管理功能区块 (所有人可见) -->
-  <view class="my-admin">
-    <view class="my-admin--tips">排行榜数据管理</view>
+  <!-- 数据上传功能区块 -->
+  <view class="my-upload">
+    <view class="my-upload--tips">数据管理</view>
     <t-cell-group theme="card">
       <t-cell
         title="上传排行榜数据"
@@ -52,50 +39,30 @@
         bind:click="onUploadExcel"
       />
       <t-cell
-        title="查看排行榜"
+        title="上传英雄胜率数据"
         hover
         arrow
-        leftIcon="chart"
-        bind:click="onViewRankings"
+        leftIcon="upload"
+        bind:click="onUploadHeroData"
       />
     </t-cell-group>
   </view>
 
-  <view class="my-service">
-    <view class="my-service--tips">推荐服务</view>
-    <t-grid column="{{4}}" class="my-service__list">
-      <t-grid-item
-        class="my-service__list-item"
-        wx:for="{{service}}"
-        wx:key="item"
-        text="{{item.name}}"
-        image="{{item.image}}"
-        url="{{item.url}}"
-        data-data="{{item}}"
-        bindclick="onEleClick"
-      />
-    </t-grid>
-  </view>
-
+  <!-- 设置选项 -->
   <t-cell-group theme="card">
     <t-cell
-      wx:for="{{settingList}}"
-      wx:for-item="item"
-      wx:key="type"
-      title="{{item.name}}"
-      url="{{item.url}}"
-      leftIcon="{{item.icon}}"
+      title="设置"
+      url="/pages/setting/index"
+      leftIcon="setting"
       hover
       arrow
-      data-data="{{item}}"
-      bindclick="onEleClick"
     />
   </t-cell-group>
 </view>
 
 <t-toast id="t-toast" />
 
-<!-- 添加Excel文件上传弹窗 -->
+<!-- 排行榜数据上传弹窗 -->
 <t-dialog
   visible="{{showUploadDialog}}"
   title="上传排行榜数据"
@@ -104,4 +71,15 @@
   cancel-btn="取消"
   bind:confirm="selectExcelFile"
   bind:cancel="closeUploadDialog"
+/>
+
+<!-- 英雄胜率数据上传弹窗 -->
+<t-dialog
+  visible="{{showHeroUploadDialog}}"
+  title="上传英雄胜率数据"
+  content="请选择Excel文件(.xlsx或.xls格式)，需要包含英雄名称(D列)、胜场数(I列)、失败数(J列)、平局数(K列)"
+  confirm-btn="选择文件"
+  cancel-btn="取消"
+  bind:confirm="selectHeroExcelFile"
+  bind:cancel="closeHeroUploadDialog"
 />
