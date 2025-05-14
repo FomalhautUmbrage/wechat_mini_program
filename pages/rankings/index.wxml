@@ -1,0 +1,82 @@
+<t-navbar title="排行榜" left-arrow />
+<view class="rankings-page">
+  <!-- Top dropdown selector -->
+  <view class="dropdown-container">
+    <view class="ranking-dropdown" bind:tap="toggleDropdown">
+      <text>{{rankingType}}</text>
+      <t-icon name="caret-down-small" size="48rpx" />
+    </view>
+    
+    <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="top">
+      <view class="popup-content">
+        <view 
+          class="popup-item {{item.label === rankingType ? 'active' : ''}}" 
+          wx:for="{{rankingOptions}}" 
+          wx:key="value" 
+          data-value="{{item.value}}"
+          data-label="{{item.label}}"
+          bind:tap="handleOptionChange"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </t-popup>
+  </view>
+
+  <!-- Top 3 podium visualization -->
+  <view class="podium-container">
+    <!-- Second place - left -->
+    <view class="podium-item second">
+      <view class="rank-avatar">
+        <t-avatar wx:if="{{rankings.length > 1}}" image="{{rankings[1].avatar}}" size="large"></t-avatar>
+      </view>
+      <view class="podium-block">
+        <view class="podium-number">2</view>
+        <view class="podium-name" wx:if="{{rankings.length > 1}}">{{rankings[1].name}}</view>
+        <view class="podium-value" wx:if="{{rankings.length > 1}}">{{rankings[1].value}}</view>
+      </view>
+    </view>
+
+    <!-- First place - middle (taller) -->
+    <view class="podium-item first">
+      <view class="rank-avatar">
+        <t-avatar wx:if="{{rankings.length > 0}}" image="{{rankings[0].avatar}}" size="large"></t-avatar>
+      </view>
+      <view class="podium-block">
+        <view class="podium-number">1</view>
+        <view class="podium-name" wx:if="{{rankings.length > 0}}">{{rankings[0].name}}</view>
+        <view class="podium-value" wx:if="{{rankings.length > 0}}">{{rankings[0].value}}</view>
+      </view>
+    </view>
+
+    <!-- Third place - right -->
+    <view class="podium-item third">
+      <view class="rank-avatar">
+        <t-avatar wx:if="{{rankings.length > 2}}" image="{{rankings[2].avatar}}" size="large"></t-avatar>
+      </view>
+      <view class="podium-block">
+        <view class="podium-number">3</view>
+        <view class="podium-name" wx:if="{{rankings.length > 2}}">{{rankings[2].name}}</view>
+        <view class="podium-value" wx:if="{{rankings.length > 2}}">{{rankings[2].value}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Remaining rankings list -->
+  <view class="rankings-list">
+    <t-cell-group>
+      <t-cell
+        wx:for="{{rankings}}"
+        wx:key="index"
+        wx:if="{{index > 2}}"
+        hover
+        bordered="{{index !== rankings.length - 1}}"
+      >
+        <view slot="left-icon" class="rank-number">{{index + 1}}</view>
+        <view slot="title" class="rank-name">{{item.name}}</view>
+        <view slot="description" class="rank-value">{{rankingType}}: {{item.value}}</view>
+        <t-avatar slot="right-icon" image="{{item.avatar}}" size="small"></t-avatar>
+      </t-cell>
+    </t-cell-group>
+  </view>
+</view>

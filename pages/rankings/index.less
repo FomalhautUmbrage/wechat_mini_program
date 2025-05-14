@@ -1,0 +1,150 @@
+@import '/variable.less';
+
+.rankings-page {
+  padding: 0;
+  background-color: @bg-color;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-container {
+  background-color: @bg-color-white;
+  padding: 32rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
+  z-index: 10;
+  position: relative;
+}
+
+.ranking-dropdown {
+  font-size: 36rpx;
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: @gy1;
+}
+
+.popup-content {
+  width: 100vw;
+  background-color: white;
+  padding: 24rpx 0;
+}
+
+.popup-item {
+  font-size: 32rpx;
+  padding: 24rpx 32rpx;
+  text-align: center;
+  color: @gy2;
+}
+
+.popup-item.active {
+  color: @brand7-normal;
+  font-weight: 600;
+}
+
+.podium-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  padding: 48rpx 24rpx;
+  background-color: @bg-color-white;
+  margin-top: 24rpx;
+}
+
+.podium-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 33.33%;
+  position: relative;
+}
+
+.rank-avatar {
+  position: absolute;
+  top: -60rpx;
+  z-index: 5;
+}
+
+.podium-block {
+  width: 200rpx;
+  border-radius: 12rpx 12rpx 0 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 60rpx;
+  background-color: @bg-color;
+}
+
+.first .podium-block {
+  height: 320rpx;
+  background-color: #FFD700;
+  color: @gy1;
+}
+
+.second .podium-block {
+  height: 240rpx;
+  background-color: #C0C0C0;
+  color: @gy1;
+}
+
+.third .podium-block {
+  height: 180rpx;
+  background-color: #CD7F32;
+  color: @gy1;
+}
+
+.podium-number {
+  font-size: 56rpx;
+  font-weight: bold;
+  line-height: 1;
+  margin-bottom: 16rpx;
+}
+
+.podium-name {
+  font-size: 28rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 8rpx;
+  padding: 0 8rpx;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.podium-value {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.rankings-list {
+  margin-top: 24rpx;
+  flex: 1;
+  background-color: @bg-color-white;
+  padding: 0 24rpx;
+}
+
+.rank-number {
+  width: 48rpx;
+  height: 48rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: @gy1;
+  margin-right: 24rpx;
+}
+
+.rank-name {
+  font-size: 32rpx;
+  font-weight: 500;
+  color: @gy1;
+}
+
+.rank-value {
+  font-size: 28rpx;
+  color: @gy2;
+  margin-top: 8rpx;
+}

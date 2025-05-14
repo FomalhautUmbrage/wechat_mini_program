@@ -1,5 +1,5 @@
 {
-  "pages": ["pages/home/index", "pages/message/index", "pages/my/index"],
+  "pages": ["pages/home/index", "pages/message/index", "pages/my/index", "pages/rankings/index"],
   "usingComponents": {
     "t-toast": "tdesign-miniprogram/toast/toast"
   },
@@ -65,6 +65,10 @@
       {
         "pagePath": "pages/my/index",
         "text": "我的"
+      },
+      {
+        "pagePath": "pages/rankings/index",
+        "text": "排行榜"
       }
     ]
   },

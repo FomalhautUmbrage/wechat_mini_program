@@ -20,6 +20,11 @@ Component({
         value: 'my',
         label: '我的',
       },
+      {
+        icon: 'chart',
+        value: 'rankings',
+        label: '排行榜',
+      },
     ],
   },
   lifetimes: {
