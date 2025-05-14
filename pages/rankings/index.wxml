@@ -7,14 +7,8 @@
       <t-icon name="caret-down-small" size="48rpx" />
     </view>
     
-    <!-- 显示当前Excel文件名称 -->
-    <view class="excel-info" wx:if="{{excelFileName}}">
-      <t-icon name="file-excel" size="32rpx" />
-      <text>{{excelFileName}}</text>
-    </view>
-    
-    <!-- 下拉选项列表，placement改为bottom使其向下展开 -->
-    <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="bottom">
+    <!-- 下拉选项列表，使用 placement="top" 并适配自定义导航栏，使其在标题下方展开 -->
+    <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="top" using-custom-navbar="{{true}}">
       <view class="popup-content">
         <view 
           class="popup-item {{item.label === rankingType ? 'active' : ''}}" 
@@ -28,6 +22,12 @@
         </view>
       </view>
     </t-popup>
+    
+    <!-- 当前Excel文件名称显示 -->
+    <view class="excel-info" wx:if="{{excelFileName}}">
+      <t-icon name="file-excel" size="32rpx" />
+      <text>{{excelFileName}}</text>
+    </view>
   </view>
 
   <!-- 无数据状态提示 -->
@@ -98,6 +98,27 @@
       </t-cell>
     </t-cell-group>
   </view>
-</view>
 
+  <!-- 时间范围选择器（底部右下角） -->
+  <view class="time-filter-container">
+    <view class="time-filter-btn" bind:tap="toggleTimeFilter">
+      <text>{{timeRange}}</text>
+      <t-icon name="caret-down-small" size="36rpx" />
+    </view>
+    <t-popup visible="{{timeFilterVisible}}" bind:visible-change="onTimeFilterVisibleChange" placement="bottom">
+      <view class="popup-content">
+        <view 
+          class="popup-item {{item.label === timeRange ? 'active' : ''}}" 
+          wx:for="{{timeOptions}}" 
+          wx:key="value" 
+          data-value="{{item.value}}"
+          data-label="{{item.label}}"
+          bind:tap="handleTimeOptionChange"
+        >
+          {{item.label}}
+        </view>
+      </view>
+    </t-popup>
+  </view>
+</view>
 <t-toast id="t-toast" />

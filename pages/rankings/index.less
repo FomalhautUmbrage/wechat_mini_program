@@ -6,7 +6,29 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-bottom: 120rpx;
 }
+
+.time-filter-container {
+    position: fixed;
+    bottom: 120rpx;
+    right: 32rpx;
+    z-index: 20;
+  }
+.time-filter-btn {
+    background-color: @bg-color-white;
+    padding: 8rpx 16rpx;
+    border: 1rpx solid @gray3;
+    border-radius: 32rpx;
+    font-size: 28rpx;
+    display: flex;
+    align-items: center;
+    color: @gy1;
+    box-shadow: 0 2rpx 6rpx rgba(0, 0, 0, 0.1);
+  }
+.time-filter-btn t-icon {
+    margin-left: 8rpx;
+  }
 
 .dropdown-container {
   background-color: @bg-color-white;

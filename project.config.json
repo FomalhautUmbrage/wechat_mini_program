@@ -52,7 +52,7 @@
     "disableSWC": true
   },
   "compileType": "miniprogram",
-  "libVersion": "3.7.8",
+  "libVersion": "3.8.4",
   "appid": "wx29400fdadfcf540c",
   "projectname": "miniprogram-starter",
   "condition": {
