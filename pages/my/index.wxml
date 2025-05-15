@@ -1,5 +1,5 @@
 <view class="my">
-  <image class="nav-bg" src="/static/bg_navbar.png" />
+  <image class="nav-bg" src="cloud://cloud1-3gwil7q954ab85d2.636c-cloud1-3gwil7q954ab85d2-1358898580/static/bg_navbar.png" />
   <!-- 修改导航组件，去掉默认的导航和菜单 -->
   <t-navbar title="我的" /> <!-- 直接使用t-navbar替代原来的nav组件 -->
   <view class="my-info">

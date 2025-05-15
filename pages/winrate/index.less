@@ -1,7 +1,7 @@
-/* pages/winrate/index.less - Updated with rank colors for hero names */
-
+/* 优化后的winrate.less文件 */
 @import '/variable.less';
 
+/* 添加过渡效果，使页面显示隐藏更平滑 */
 .winrate-page {
   padding: 0;
   background-color: @bg-color;
@@ -9,6 +9,7 @@
   display: flex;
   flex-direction: column;
   padding-bottom: 120rpx;
+  transition: opacity 0.3s ease; /* 添加过渡效果 */
 }
 
 .header-container {
@@ -17,6 +18,9 @@
   box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.1);
   z-index: 10;
   position: relative;
+  /* 使用硬件加速 */
+  will-change: transform;
+  transform: translateZ(0);
 }
 
 .header-title {
@@ -83,6 +87,17 @@
   margin-top: 24rpx;
   flex: 1;
   background-color: @bg-color-white;
+  /* 添加过渡效果 */
+  transition: opacity 0.3s ease;
+}
+
+/* 通过CSS控制可见性，性能比直接移除DOM更好 */
+.hero-list.visible {
+  opacity: 1;
+}
+
+.hero-list.hidden {
+  opacity: 0;
 }
 
 .rank-number {
@@ -101,7 +116,7 @@
   font-weight: 500;
 }
 
-/* Colors for ranks and hero names */
+/* 颜色类样式 */
 .rank-red {
   color: #d54941 !important;
 }
@@ -142,35 +157,32 @@
   font-weight: 600;
 }
 
-/* 红色标签（前三名） */
+/* 标签颜色定义 */
 .rank-tag-red {
   color: #d54941;
   background-color: rgba(213, 73, 65, 0.1);
   border: 1rpx solid rgba(213, 73, 65, 0.3);
 }
 
-/* 橙色标签（4-10名） */
 .rank-tag-orange {
   color: #ed7b2f;
   background-color: rgba(237, 123, 47, 0.1);
   border: 1rpx solid rgba(237, 123, 47, 0.3);
 }
 
-/* 紫色标签（11-20名） */
 .rank-tag-purple {
   color: #722ed1;
   background-color: rgba(114, 46, 209, 0.1);
   border: 1rpx solid rgba(114, 46, 209, 0.3);
 }
 
-/* 蓝色标签（20名以后） */
 .rank-tag-blue {
   color: #0052d9;
   background-color: rgba(0, 82, 217, 0.1);
   border: 1rpx solid rgba(0, 82, 217, 0.3);
 }
 
-/* Animation */
+/* 优化动画 - 使用opacity和transform，避免layout重绘 */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -182,72 +194,22 @@
   }
 }
 
-.hero-list .t-cell {
+/* 减少同时动画的元素数量，只对前几个元素应用动画 */
+.hero-list .t-cell:nth-child(-n+10) {
   opacity: 0;
   animation: fadeIn 0.3s ease-out forwards;
+  /* 使用硬件加速 */
+  will-change: opacity, transform;
 }
 
-/* Staggered animation delays for more visible effect */
-.hero-list .t-cell:nth-child(1) {
-  animation-delay: 0.1s;
-}
-
-.hero-list .t-cell:nth-child(2) {
-  animation-delay: 0.15s;
-}
-
-.hero-list .t-cell:nth-child(3) {
-  animation-delay: 0.2s;
-}
-
-.hero-list .t-cell:nth-child(4) {
-  animation-delay: 0.25s;
-}
-
-.hero-list .t-cell:nth-child(5) {
-  animation-delay: 0.3s;
-}
-
-.hero-list .t-cell:nth-child(6) {
-  animation-delay: 0.35s;
-}
-
-.hero-list .t-cell:nth-child(7) {
-  animation-delay: 0.4s;
-}
-
-.hero-list .t-cell:nth-child(8) {
-  animation-delay: 0.45s;
-}
-
-.hero-list .t-cell:nth-child(9) {
-  animation-delay: 0.5s;
-}
-
-.hero-list .t-cell:nth-child(10) {
-  animation-delay: 0.55s;
-}
-
-.hero-list .t-cell:nth-child(11) {
-  animation-delay: 0.6s;
-}
-
-.hero-list .t-cell:nth-child(12) {
-  animation-delay: 0.65s;
-}
-
-.hero-list .t-cell:nth-child(13) {
-  animation-delay: 0.7s;
-}
-
-.hero-list .t-cell:nth-child(14) {
-  animation-delay: 0.75s;
-}
-
-.hero-list .t-cell:nth-child(15) {
-  animation-delay: 0.8s;
-}
-
-.hero-list .t-cell:nth-child(n+16) {
-  animation-delay: 0.85s;
-}
+/* 减少延迟时间，加快动画完成速度 */
+.hero-list .t-cell:nth-child(1) { animation-delay: 0.05s; }
+.hero-list .t-cell:nth-child(2) { animation-delay: 0.1s; }
+.hero-list .t-cell:nth-child(3) { animation-delay: 0.15s; }
+.hero-list .t-cell:nth-child(4) { animation-delay: 0.2s; }
+.hero-list .t-cell:nth-child(5) { animation-delay: 0.25s; }
+.hero-list .t-cell:nth-child(6) { animation-delay: 0.3s; }
+.hero-list .t-cell:nth-child(7) { animation-delay: 0.35s; }
+.hero-list .t-cell:nth-child(8) { animation-delay: 0.4s; }
+.hero-list .t-cell:nth-child(9) { animation-delay: 0.45s; }
+.hero-list .t-cell:nth-child(10) { animation-delay: 0.5s; }

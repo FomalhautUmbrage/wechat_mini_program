@@ -7,12 +7,12 @@ Page({
   data: {
     originFiles: [
       {
-        url: '/static/image1.png',
+        url: 'cloud://cloud1-3gwil7q954ab85d2.636c-cloud1-3gwil7q954ab85d2-1358898580/static/image1.png',
         name: 'uploaded1.png',
         type: 'image',
       },
       {
-        url: '/static/image2.png',
+        url: 'cloud://cloud1-3gwil7q954ab85d2.636c-cloud1-3gwil7q954ab85d2-1358898580/static/image2.png',
         name: 'uploaded2.png',
         type: 'image',
       },

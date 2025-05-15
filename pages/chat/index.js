@@ -5,7 +5,7 @@ const { socket } = app.globalData; // 获取已连接的socketTask
 Page({
   /** 页面的初始数据 */
   data: {
-    myAvatar: '/static/chat/avatar.png', // 自己的头像
+    myAvatar: 'cloud://cloud1-3gwil7q954ab85d2.636c-cloud1-3gwil7q954ab85d2-1358898580/static/chat/avatar.png', // 自己的头像
     userId: null, // 对方userId
     avatar: '', // 对方头像
     name: '', // 对方昵称
