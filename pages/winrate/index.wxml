@@ -1,5 +1,3 @@
-// 修复 pages/winrate/index.wxml 文件中的标签颜色问题
-
 <t-navbar title="胜率查询" left-arrow />
 <view class="winrate-page">
   <!-- Header with search -->
@@ -60,9 +58,25 @@
           <text style="margin-left: 8rpx;">平: {{item.draws}}</text>
         </view>
         
-        <!-- 修改后的胜率标签 - 直接使用CSS类控制颜色 -->
+        <!-- Win rate badge on right - 使用内联样式替代主题 -->
         <view slot="right-icon">
-          <view class="{{index < 3 ? 'rank-tag rank-tag-red' : (index < 10 ? 'rank-tag rank-tag-orange' : (index < 20 ? 'rank-tag rank-tag-purple' : 'rank-tag rank-tag-blue'))}}">
+          <!-- 前三名：红色 -->
+          <view wx:if="{{index < 3}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(217, 48, 37, 0.1); color: #d93025; border-radius: 6rpx; font-size: 24rpx;">
+            {{item.winRate}}%
+          </view>
+          
+          <!-- 第4-10名：橙色 -->
+          <view wx:elif="{{index < 10}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(230, 145, 56, 0.1); color: #e69138; border-radius: 6rpx; font-size: 24rpx;">
+            {{item.winRate}}%
+          </view>
+          
+          <!-- 第11-20名：紫色 -->
+          <view wx:elif="{{index < 20}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(114, 46, 209, 0.1); color: #722ed1; border-radius: 6rpx; font-size: 24rpx;">
+            {{item.winRate}}%
+          </view>
+          
+          <!-- 其余：蓝色 -->
+          <view wx:else class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(0, 82, 217, 0.1); color: #0052d9; border-radius: 6rpx; font-size: 24rpx;">
             {{item.winRate}}%
           </view>
         </view>
