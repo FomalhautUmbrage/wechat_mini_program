@@ -13,7 +13,6 @@
     "t-tag": "tdesign-miniprogram/tag/tag",
     "t-toast": "tdesign-miniprogram/toast/toast",
     "t-dialog": "tdesign-miniprogram/dialog/dialog",
-    "t-popup": "tdesign-miniprogram/popup/popup",
-    "wudaohui-recorder": "/components/wudaohui-recorder/index"
+    "nav": "/components/nav"
   }
 }
