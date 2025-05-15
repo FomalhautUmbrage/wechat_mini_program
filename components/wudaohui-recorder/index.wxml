@@ -1,0 +1,131 @@
+<!-- components/wudaohui-recorder/index.wxml -->
+<view class="wudaohui-recorder">
+  <!-- 标签页头部 -->
+  <view class="tabs-header">
+    <view class="tab-item {{activeTab === 'record' ? 'active' : ''}}" bindtap="switchTab" data-tab="record">
+      记录武道会
+    </view>
+    <view class="tab-item {{activeTab === 'history' ? 'active' : ''}}" bindtap="switchTab" data-tab="history">
+      历史记录
+    </view>
+    <view class="tab-item {{activeTab === 'stats' ? 'active' : ''}}" bindtap="switchTab" data-tab="stats">
+      数据统计
+    </view>
+  </view>
+
+  <!-- 记录武道会标签页 -->
+  <view class="tab-content" hidden="{{activeTab !== 'record'}}">
+    <view class="section-title">选择参赛玩家</view>
+    <view class="player-selection">
+      <view class="selection-stats">已选择 {{selectedPlayers.length}}/8 位玩家</view>
+      
+      <view class="player-grid">
+        <view wx:for="{{playerData}}" wx:key="id" 
+              class="player-card {{selectedPlayers.findIndex(p => p.id === item.id) !== -1 ? 'selected' : ''}}"
+              bindtap="togglePlayerSelection" data-id="{{item.id}}">
+          <view class="player-name">{{item.name}}</view>
+          <view class="player-stats">积分: {{item.points}}</view>
+        </view>
+      </view>
+      
+      <view wx:if="{{selectedPlayers.length > 0}}" class="selected-players">
+        <view class="section-title">当前排名 (拖动调整顺序)</view>
+        
+        <view class="ranking-list">
+          <view wx:for="{{selectedPlayers}}" wx:key="id" 
+                class="ranking-item {{dragging && draggedOverIndex === index ? 'drag-over' : ''}} {{dragging && draggedPlayer.id === item.id ? 'dragging' : ''}}"
+                bindlongpress="onDragStart" bindtouchmove="onDragOver" bindtouchend="onDragEnd"
+                data-index="{{index}}">
+            <view class="rank-number">{{index + 1}}</view>
+            <view class="player-info">
+              <view class="player-name">{{item.name}}</view>
+              <view class="player-points">{{item.points}} 积分</view>
+            </view>
+          </view>
+        </view>
+      </view>
+      
+      <view class="action-buttons">
+        <t-button theme="primary" size="large" disabled="{{selectedPlayers.length < 2}}" bindtap="recordWudaohui">
+          记录本次武道会
+        </t-button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 历史记录标签页 -->
+  <view class="tab-content" hidden="{{activeTab !== 'history'}}">
+    <view wx:if="{{historyRecords.length === 0}}" class="empty-state">
+      暂无武道会记录
+    </view>
+    
+    <view wx:else class="history-list">
+      <view wx:for="{{historyRecords}}" wx:key="id" class="history-item">
+        <view class="history-header">
+          <view class="history-title">武道会 #{{item.id}}</view>
+          <view class="history-date">{{item.date}}</view>
+        </view>
+        
+        <view class="history-results">
+          <view wx:for="{{item.results}}" wx:for-item="result" wx:key="rank" 
+                class="result-item {{getRankColor(result.rank)}}">
+            <view class="result-rank">{{result.rank}}</view>
+            <view class="result-name">{{result.name}}</view>
+            <view class="result-points">+{{result.points}}</view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 数据统计标签页 -->
+  <view class="tab-content" hidden="{{activeTab !== 'stats'}}">
+    <view class="stats-section">
+      <view class="section-title">冠军数排行</view>
+      <view class="stats-list">
+        <view wx:for="{{playerData.sort(function(a,b){return b.championships-a.championships}).slice(0,5)}}" 
+              wx:key="id" class="stats-item">
+          <view class="stats-rank">{{index + 1}}</view>
+          <view class="stats-name">{{item.name}}</view>
+          <view class="stats-value">{{item.championships}}</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="stats-section">
+      <view class="section-title">胜场数排行</view>
+      <view class="stats-list">
+        <view wx:for="{{playerData.sort(function(a,b){return b.wins-a.wins}).slice(0,5)}}" 
+              wx:key="id" class="stats-item">
+          <view class="stats-rank">{{index + 1}}</view>
+          <view class="stats-name">{{item.name}}</view>
+          <view class="stats-value">{{item.wins}}</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="stats-section">
+      <view class="section-title">老八数排行</view>
+      <view class="stats-list">
+        <view wx:for="{{playerData.sort(function(a,b){return b.laoBa-a.laoBa}).slice(0,5)}}" 
+              wx:key="id" class="stats-item">
+          <view class="stats-rank">{{index + 1}}</view>
+          <view class="stats-name">{{item.name}}</view>
+          <view class="stats-value">{{item.laoBa}}</view>
+        </view>
+      </view>
+    </view>
+    
+    <view class="stats-section">
+      <view class="section-title">总积分排行</view>
+      <view class="stats-list">
+        <view wx:for="{{playerData.sort(function(a,b){return b.points-a.points})}}" 
+              wx:key="id" class="stats-item">
+          <view class="stats-rank">{{index + 1}}</view>
+          <view class="stats-name">{{item.name}}</view>
+          <view class="stats-value">{{item.points}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

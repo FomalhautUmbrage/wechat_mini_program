@@ -1,0 +1,267 @@
+/* components/wudaohui-recorder/index.wxss */
+.wudaohui-recorder {
+    width: 100%;
+    background-color: #f5f5f5;
+  }
+  
+  /* 标签页样式 */
+  .tabs-header {
+    display: flex;
+    background-color: #fff;
+    border-bottom: 1rpx solid #e0e0e0;
+  }
+  
+  .tab-item {
+    flex: 1;
+    text-align: center;
+    padding: 24rpx 0;
+    font-size: 28rpx;
+    position: relative;
+  }
+  
+  .tab-item.active {
+    color: #0052d9;
+    font-weight: 500;
+  }
+  
+  .tab-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 32rpx;
+    height: 4rpx;
+    background-color: #0052d9;
+  }
+  
+  .tab-content {
+    padding: 24rpx;
+  }
+  
+  /* 记录武道会标签页 */
+  .section-title {
+    font-size: 30rpx;
+    font-weight: 500;
+    margin: 24rpx 0 16rpx;
+  }
+  
+  .selection-stats {
+    font-size: 24rpx;
+    color: #666;
+    margin-bottom: 16rpx;
+  }
+  
+  .player-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16rpx;
+    margin-bottom: 24rpx;
+  }
+  
+  .player-card {
+    background-color: #fff;
+    padding: 16rpx;
+    border-radius: 8rpx;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .player-card.selected {
+    background-color: #e8f3ff;
+    border: 2rpx solid #0052d9;
+  }
+  
+  .player-name {
+    font-size: 28rpx;
+    font-weight: 500;
+  }
+  
+  .player-stats {
+    font-size: 24rpx;
+    color: #666;
+    margin-top: 8rpx;
+  }
+  
+  .ranking-list {
+    margin-bottom: 24rpx;
+  }
+  
+  .ranking-item {
+    display: flex;
+    align-items: center;
+    padding: 16rpx;
+    background-color: #fff;
+    margin-bottom: 8rpx;
+    border-radius: 8rpx;
+    box-shadow: 0 2rpx 4rpx rgba(0, 0, 0, 0.05);
+  }
+  
+  .ranking-item.drag-over {
+    border: 2rpx dashed #0052d9;
+    background-color: #f0f7ff;
+  }
+  
+  .ranking-item.dragging {
+    opacity: 0.5;
+  }
+  
+  .rank-number {
+    width: 48rpx;
+    height: 48rpx;
+    border-radius: 50%;
+    background-color: #0052d9;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+    margin-right: 16rpx;
+  }
+  
+  .player-info {
+    flex: 1;
+  }
+  
+  .player-points {
+    font-size: 24rpx;
+    color: #666;
+    margin-top: 4rpx;
+  }
+  
+  .action-buttons {
+    margin-top: 32rpx;
+  }
+  
+  /* 历史记录标签页 */
+  .empty-state {
+    text-align: center;
+    padding: 48rpx 0;
+    color: #999;
+    font-size: 28rpx;
+  }
+  
+  .history-item {
+    background-color: #fff;
+    border-radius: 8rpx;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+    margin-bottom: 24rpx;
+    overflow: hidden;
+  }
+  
+  .history-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16rpx 24rpx;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  
+  .history-title {
+    font-size: 30rpx;
+    font-weight: 500;
+  }
+  
+  .history-date {
+    font-size: 24rpx;
+    color: #666;
+  }
+  
+  .history-results {
+    padding: 16rpx 24rpx;
+  }
+  
+  .result-item {
+    display: flex;
+    align-items: center;
+    padding: 12rpx 0;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  
+  .result-item:last-child {
+    border-bottom: none;
+  }
+  
+  .gold-rank .result-rank {
+    background-color: #ffcd00;
+  }
+  
+  .silver-rank .result-rank {
+    background-color: #c0c0c0;
+  }
+  
+  .bronze-rank .result-rank {
+    background-color: #cd7f32;
+  }
+  
+  .result-rank {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    background-color: #0052d9;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
+    font-weight: 500;
+    margin-right: 16rpx;
+  }
+  
+  .result-name {
+    flex: 1;
+    font-size: 28rpx;
+  }
+  
+  .result-points {
+    font-size: 28rpx;
+    color: #0052d9;
+    font-weight: 500;
+  }
+  
+  /* 数据统计标签页 */
+  .stats-section {
+    background-color: #fff;
+    border-radius: 8rpx;
+    padding: 16rpx 24rpx;
+    margin-bottom: 24rpx;
+    box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+  }
+  
+  .stats-list {
+    margin-top: 16rpx;
+  }
+  
+  .stats-item {
+    display: flex;
+    align-items: center;
+    padding: 12rpx 0;
+    border-bottom: 1rpx solid #f0f0f0;
+  }
+  
+  .stats-item:last-child {
+    border-bottom: none;
+  }
+  
+  .stats-rank {
+    width: 40rpx;
+    height: 40rpx;
+    border-radius: 50%;
+    background-color: #f0f0f0;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24rpx;
+    margin-right: 16rpx;
+  }
+  
+  .stats-name {
+    flex: 1;
+    font-size: 28rpx;
+  }
+  
+  .stats-value {
+    font-size: 28rpx;
+    font-weight: 500;
+    color: #0052d9;
+  }

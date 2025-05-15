@@ -27,6 +27,28 @@
       </t-cell>
     </t-cell-group>
   </view>
+  
+  <!-- 武道会管理区块 -->
+  <view class="my-wudaohui">
+    <view class="my-wudaohui--tips">武道会管理</view>
+    <t-cell-group theme="card">
+      <t-cell
+        title="武道会记录工具"
+        hover
+        arrow
+        leftIcon="gamepad"
+        bind:click="openWudaohuiRecorder"
+      />
+      <t-cell
+        title="清除武道会数据"
+        hover
+        arrow
+        leftIcon="delete"
+        bind:click="clearWudaohuiData"
+      />
+    </t-cell-group>
+  </view>
+  
   <!-- 数据上传功能区块 -->
   <view class="my-upload">
     <view class="my-upload--tips">数据管理</view>
@@ -47,6 +69,7 @@
       />
     </t-cell-group>
   </view>
+  
   <!-- 设置选项 -->
   <t-cell-group theme="card">
     <t-cell
@@ -58,24 +81,35 @@
     />
   </t-cell-group>
 </view>
+
+<!-- 武道会记录工具弹窗 -->
+<t-popup
+  visible="{{showWudaohuiRecorder}}"
+  placement="bottom"
+  close-on-overlay-click
+  bind:visible-change="closeWudaohuiRecorder"
+>
+  <wudaohui-recorder bind:dataUpdated="onWudaohuiDataUpdated" />
+</t-popup>
+
 <t-toast id="t-toast" />
 <!-- 排行榜数据上传弹窗 -->
 <t-dialog
-visible="{{showUploadDialog}}"
-title="上传排行榜数据"
-content="请选择Excel文件(.xlsx或.xls格式)"
-confirm-btn="选择文件"
-cancel-btn="取消"
-bind:confirm="selectExcelFile"
-bind:cancel="closeUploadDialog"
+  visible="{{showUploadDialog}}"
+  title="上传排行榜数据"
+  content="请选择Excel文件(.xlsx或.xls格式), 系统将从第2099行提取玩家数据"
+  confirm-btn="选择文件"
+  cancel-btn="取消"
+  bind:confirm="selectExcelFile"
+  bind:cancel="closeUploadDialog"
 />
 <!-- 英雄胜率数据上传弹窗 -->
 <t-dialog
-visible="{{showHeroUploadDialog}}"
-title="上传英雄胜率数据"
-content="请选择Excel文件(.xlsx或.xls格式)，需要包含英雄名称(D列)、胜场数(I列)、失败数(J列)、平局数(K列)"
-confirm-btn="选择文件"
-cancel-btn="取消"
-bind:confirm="selectHeroExcelFile"
-bind:cancel="closeHeroUploadDialog"
+  visible="{{showHeroUploadDialog}}"
+  title="上传英雄胜率数据"
+  content="请选择Excel文件(.xlsx或.xls格式)，需要包含英雄名称(D列)、胜场数(I列)、失败数(J列)、平局数(K列)"
+  confirm-btn="选择文件"
+  cancel-btn="取消"
+  bind:confirm="selectHeroExcelFile"
+  bind:cancel="closeHeroUploadDialog"
 />

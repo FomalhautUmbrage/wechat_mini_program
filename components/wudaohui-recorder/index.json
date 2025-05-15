@@ -1,0 +1,15 @@
+{
+    "component": true,
+    "usingComponents": {
+      "t-button": "tdesign-miniprogram/button/button",
+      "t-tabs": "tdesign-miniprogram/tabs/tabs",
+      "t-tab-panel": "tdesign-miniprogram/tab-panel/tab-panel",
+      "t-cell": "tdesign-miniprogram/cell/cell",
+      "t-cell-group": "tdesign-miniprogram/cell-group/cell-group",
+      "t-avatar": "tdesign-miniprogram/avatar/avatar",
+      "t-tag": "tdesign-miniprogram/tag/tag",
+      "t-badge": "tdesign-miniprogram/badge/badge",
+      "t-divider": "tdesign-miniprogram/divider/divider",
+      "t-icon": "tdesign-miniprogram/icon/icon"
+    }
+  }
