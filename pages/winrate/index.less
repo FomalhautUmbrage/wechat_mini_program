@@ -1,4 +1,4 @@
-/* 修改 pages/winrate/index.less 文件，添加自定义胜率标签样式 */
+/* pages/winrate/index.less - Updated with rank colors for hero names */
 
 @import '/variable.less';
 
@@ -47,12 +47,6 @@
   color: #0052d9;
 }
 
-.upload-btn-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 16rpx;
-}
-
 .no-data-container {
   display: flex;
   flex-direction: column;
@@ -99,14 +93,29 @@
   align-items: center;
   font-size: 28rpx;
   font-weight: 600;
-  color: @gy1;
   margin-right: 16rpx;
 }
 
 .hero-name {
   font-size: 32rpx;
   font-weight: 500;
-  color: @gy1;
+}
+
+/* Colors for ranks and hero names */
+.rank-red {
+  color: #d54941 !important;
+}
+
+.rank-orange {
+  color: #ed7b2f !important;
+}
+
+.rank-purple {
+  color: #722ed1 !important;
+}
+
+.rank-blue {
+  color: #0052d9 !important;
 }
 
 .hero-stats {
@@ -115,17 +124,6 @@
   margin-top: 8rpx;
   display: flex;
   align-items: center;
-}
-
-.progress-container {
-  width: 240rpx;
-  margin-left: 16rpx;
-}
-
-.win-rate-text {
-  color: #0052d9;
-  font-weight: 600;
-  margin-left: 8rpx;
 }
 
 .top-hero {
@@ -142,7 +140,6 @@
   border-radius: 6rpx;
   font-size: 24rpx;
   font-weight: 600;
-  margin-left: 16rpx;
 }
 
 /* 红色标签（前三名） */
@@ -190,6 +187,7 @@
   animation: fadeIn 0.3s ease-out forwards;
 }
 
+/* Staggered animation delays for more visible effect */
 .hero-list .t-cell:nth-child(1) {
   animation-delay: 0.1s;
 }
@@ -214,6 +212,42 @@
   animation-delay: 0.35s;
 }
 
-.hero-list .t-cell:nth-child(n+7) {
+.hero-list .t-cell:nth-child(7) {
   animation-delay: 0.4s;
+}
+
+.hero-list .t-cell:nth-child(8) {
+  animation-delay: 0.45s;
+}
+
+.hero-list .t-cell:nth-child(9) {
+  animation-delay: 0.5s;
+}
+
+.hero-list .t-cell:nth-child(10) {
+  animation-delay: 0.55s;
+}
+
+.hero-list .t-cell:nth-child(11) {
+  animation-delay: 0.6s;
+}
+
+.hero-list .t-cell:nth-child(12) {
+  animation-delay: 0.65s;
+}
+
+.hero-list .t-cell:nth-child(13) {
+  animation-delay: 0.7s;
+}
+
+.hero-list .t-cell:nth-child(14) {
+  animation-delay: 0.75s;
+}
+
+.hero-list .t-cell:nth-child(15) {
+  animation-delay: 0.8s;
+}
+
+.hero-list .t-cell:nth-child(n+16) {
+  animation-delay: 0.85s;
 }

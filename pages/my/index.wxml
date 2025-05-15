@@ -1,6 +1,7 @@
 <view class="my">
   <image class="nav-bg" src="/static/bg_navbar.png" />
-  <nav title-text="我的" />
+  <!-- 修改导航组件，去掉默认的导航和菜单 -->
+  <t-navbar title="我的" /> <!-- 直接使用t-navbar替代原来的nav组件 -->
   <view class="my-info">
     <t-cell-group>
       <t-cell wx:if="{{isLoad}}" bordered="{{false}}">
@@ -26,7 +27,6 @@
       </t-cell>
     </t-cell-group>
   </view>
-
   <!-- 数据上传功能区块 -->
   <view class="my-upload">
     <view class="my-upload--tips">数据管理</view>
@@ -47,7 +47,6 @@
       />
     </t-cell-group>
   </view>
-
   <!-- 设置选项 -->
   <t-cell-group theme="card">
     <t-cell
@@ -59,27 +58,24 @@
     />
   </t-cell-group>
 </view>
-
 <t-toast id="t-toast" />
-
 <!-- 排行榜数据上传弹窗 -->
 <t-dialog
-  visible="{{showUploadDialog}}"
-  title="上传排行榜数据"
-  content="请选择Excel文件(.xlsx或.xls格式)"
-  confirm-btn="选择文件"
-  cancel-btn="取消"
-  bind:confirm="selectExcelFile"
-  bind:cancel="closeUploadDialog"
+visible="{{showUploadDialog}}"
+title="上传排行榜数据"
+content="请选择Excel文件(.xlsx或.xls格式)"
+confirm-btn="选择文件"
+cancel-btn="取消"
+bind:confirm="selectExcelFile"
+bind:cancel="closeUploadDialog"
 />
-
 <!-- 英雄胜率数据上传弹窗 -->
 <t-dialog
-  visible="{{showHeroUploadDialog}}"
-  title="上传英雄胜率数据"
-  content="请选择Excel文件(.xlsx或.xls格式)，需要包含英雄名称(D列)、胜场数(I列)、失败数(J列)、平局数(K列)"
-  confirm-btn="选择文件"
-  cancel-btn="取消"
-  bind:confirm="selectHeroExcelFile"
-  bind:cancel="closeHeroUploadDialog"
+visible="{{showHeroUploadDialog}}"
+title="上传英雄胜率数据"
+content="请选择Excel文件(.xlsx或.xls格式)，需要包含英雄名称(D列)、胜场数(I列)、失败数(J列)、平局数(K列)"
+confirm-btn="选择文件"
+cancel-btn="取消"
+bind:confirm="selectHeroExcelFile"
+bind:cancel="closeHeroUploadDialog"
 />

@@ -1,4 +1,3 @@
-// pages/winrate/index.js - 完整的修改版
 import Toast from 'tdesign-miniprogram/toast/index';
 const XLSX = require('../../utils/xlsx.js');
 
@@ -9,7 +8,10 @@ Page({
     heroList: [],
     searchValue: '',
     filteredHeroList: [],
-    excelFileName: ''
+    excelFileName: '',
+    // Add these new properties for animation control
+    listVisible: true,
+    animationKey: Date.now()
   },
 
   onLoad() {
@@ -22,8 +24,30 @@ Page({
         value: 'winrate'
       });
     }
+    
+    // Force animation replay when returning to this page
+    if (this.data.hasData && this.data.heroList.length > 0) {
+      this.forceRerenderList();
+    }
+    
     // Refresh the data when the page is shown
     this.checkExcelData();
+  },
+
+  // Add this new method to force re-rendering of the hero list
+  forceRerenderList() {
+    // First hide the list
+    this.setData({
+      listVisible: false
+    });
+    
+    // Then show it again after a short delay with a new key
+    setTimeout(() => {
+      this.setData({
+        listVisible: true,
+        animationKey: Date.now()
+      });
+    }, 50);
   },
 
   // 新增：根据排名返回对应的主题颜色

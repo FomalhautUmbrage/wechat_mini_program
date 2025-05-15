@@ -1,6 +1,6 @@
 <t-navbar left-arrow />
 <view class="page login">
-  <view class="login__title"> 欢迎登录 TDsign </view>
+  <view class="login__title"> 欢迎登录二七排行榜 </view>
   <view class="login__content">
     <view class="login__input">
       <view class="login__password" wx:if="{{isPasswordLogin}}">

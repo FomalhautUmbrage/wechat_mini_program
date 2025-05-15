@@ -1,42 +1,38 @@
-<t-navbar title="胜率查询" left-arrow />
+<t-navbar title="胜率查询" /> <!-- 去掉了 left-arrow 属性 -->
 <view class="winrate-page">
   <!-- Header with search -->
   <view class="header-container">
     <view class="header-title">
       <text>英雄胜率排行</text>
     </view>
-    
-    <!-- Search box -->
-    <view class="search-container">
-      <t-search
-        value="{{searchValue}}"
-        placeholder="搜索英雄名称"
-        bind:change="onSearch"
-        bind:submit="onSearch"
-      />
-    </view>
-    
-    <!-- Current Excel file info -->
-    <view class="excel-info" wx:if="{{excelFileName}}">
-      <t-icon name="file-excel" size="32rpx" />
-      <text>{{excelFileName}}</text>
-    </view>
-  </view>
+<!-- Search box -->
+<view class="search-container">
+  <t-search
+    value="{{searchValue}}"
+    placeholder="搜索英雄名称"
+    bind:change="onSearch"
+    bind:submit="onSearch"
+  />
+</view>
 
+<!-- Current Excel file info -->
+<view class="excel-info" wx:if="{{excelFileName}}">
+  <t-icon name="file-excel" size="32rpx" />
+  <text>{{excelFileName}}</text>
+</view>
+  </view>
   <!-- No data state -->
   <view class="no-data-container" wx:if="{{!hasData && !loading}}">
     <t-empty icon="info-circle-filled" description="暂无英雄数据" />
     <view class="no-data-tips">请在"我的"页面上传英雄胜率数据</view>
   </view>
-
   <!-- Loading indicator -->
   <view class="loading-container" wx:if="{{loading}}">
     <t-loading theme="circular" size="48rpx" />
     <text class="loading-text">数据加载中...</text>
   </view>
-
-  <!-- Hero list -->
-  <view class="hero-list" wx:if="{{hasData && !loading}}">
+  <!-- Hero list with visibility control for animation -->
+  <view wx:if="{{hasData && !loading && listVisible}}" class="hero-list" data-key="{{animationKey}}">
     <t-cell-group>
       <t-cell
         wx:for="{{filteredHeroList}}"
@@ -45,44 +41,42 @@
         t-class="{{index < 3 ? 'top-hero' : ''}}"
       >
         <!-- Rank number -->
-        <view slot="left-icon" class="rank-number">{{index + 1}}</view>
-        
-        <!-- Hero name -->
-        <view slot="title" class="hero-name">{{item.name}}</view>
-        
-        <!-- Stats with progress bar -->
-        <view slot="description" class="hero-stats">
-          <text>场次: {{item.totalGames}}</text>
-          <text style="margin-left: 16rpx;">胜: {{item.wins}}</text>
-          <text style="margin-left: 8rpx;">负: {{item.losses}}</text>
-          <text style="margin-left: 8rpx;">平: {{item.draws}}</text>
-        </view>
-        
-        <!-- Win rate badge on right - 使用内联样式替代主题 -->
-        <view slot="right-icon">
-          <!-- 前三名：红色 -->
-          <view wx:if="{{index < 3}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(217, 48, 37, 0.1); color: #d93025; border-radius: 6rpx; font-size: 24rpx;">
-            {{item.winRate}}%
-          </view>
-          
-          <!-- 第4-10名：橙色 -->
-          <view wx:elif="{{index < 10}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(230, 145, 56, 0.1); color: #e69138; border-radius: 6rpx; font-size: 24rpx;">
-            {{item.winRate}}%
-          </view>
-          
-          <!-- 第11-20名：紫色 -->
-          <view wx:elif="{{index < 20}}" class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(114, 46, 209, 0.1); color: #722ed1; border-radius: 6rpx; font-size: 24rpx;">
-            {{item.winRate}}%
-          </view>
-          
-          <!-- 其余：蓝色 -->
-          <view wx:else class="winrate-tag" style="display: inline-block; padding: 0 16rpx; height: 48rpx; line-height: 48rpx; background-color: rgba(0, 82, 217, 0.1); color: #0052d9; border-radius: 6rpx; font-size: 24rpx;">
-            {{item.winRate}}%
-          </view>
-        </view>
-      </t-cell>
-    </t-cell-group>
+        <view slot="left-icon" class="rank-number {{index < 3 ? 'rank-red' : (index < 10 ? 'rank-orange' : (index < 20 ? 'rank-purple' : 'rank-blue'))}}">{{index + 1}}</view>
+    <!-- Hero name -->
+    <view slot="title" class="hero-name {{index < 3 ? 'rank-red' : (index < 10 ? 'rank-orange' : (index < 20 ? 'rank-purple' : 'rank-blue'))}}">{{item.name}}</view>
+    
+    <!-- Stats with progress bar -->
+    <view slot="description" class="hero-stats">
+      <text>场次: {{item.totalGames}}</text>
+      <text style="margin-left: 16rpx;">胜: {{item.wins}}</text>
+      <text style="margin-left: 8rpx;">负: {{item.losses}}</text>
+      <text style="margin-left: 8rpx;">平: {{item.draws}}</text>
+    </view>
+    
+    <!-- Win rate badge on right with color based on rank -->
+    <view slot="right-icon">
+      <!-- 前三名：红色 -->
+      <view wx:if="{{index < 3}}" class="rank-tag rank-tag-red">
+        {{item.winRate}}%
+      </view>
+      
+      <!-- 第4-10名：橙色 -->
+      <view wx:elif="{{index < 10}}" class="rank-tag rank-tag-orange">
+        {{item.winRate}}%
+      </view>
+      
+      <!-- 第11-20名：紫色 -->
+      <view wx:elif="{{index < 20}}" class="rank-tag rank-tag-purple">
+        {{item.winRate}}%
+      </view>
+      
+      <!-- 其余：蓝色 -->
+      <view wx:else class="rank-tag rank-tag-blue">
+        {{item.winRate}}%
+      </view>
+    </view>
+  </t-cell>
+</t-cell-group>
   </view>
 </view>
-
 <t-toast id="t-toast" />

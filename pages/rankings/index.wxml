@@ -1,5 +1,4 @@
-<!-- 对 pages/rankings/index.wxml 文件的修改 -->
-<t-navbar title="排行榜" left-arrow />
+<t-navbar title="排行榜" /> <!-- 去掉了 left-arrow 属性 -->
 <view class="rankings-page">
   <!-- Top dropdown selector -->
   <view class="dropdown-container">
@@ -7,22 +6,20 @@
       <text>{{rankingType}}</text>
       <t-icon name="caret-down-small" size="48rpx" />
     </view>
-    
-    <!-- 当前Excel文件名称显示 -->
-    <view class="excel-info" wx:if="{{excelFileName}}">
-      <t-icon name="file-excel" size="32rpx" />
-      <text>{{excelFileName}}</text>
-    </view>
-    
-    <!-- 时间筛选按钮 - 移到顶部右侧 -->
-    <view class="top-time-filter">
-      <view class="time-filter-btn" bind:tap="toggleTimeFilter">
-        <text>{{timeRange}}</text>
-        <t-icon name="caret-down-small" size="36rpx" />
-      </view>
-    </view>
+<!-- 当前Excel文件名称显示 -->
+<view class="excel-info" wx:if="{{excelFileName}}">
+  <t-icon name="file-excel" size="32rpx" />
+  <text>{{excelFileName}}</text>
+</view>
+
+<!-- 时间筛选按钮 - 移到顶部右侧 -->
+<view class="top-time-filter">
+  <view class="time-filter-btn" bind:tap="toggleTimeFilter">
+    <text>{{timeRange}}</text>
+    <t-icon name="caret-down-small" size="36rpx" />
   </view>
-  
+</view>
+  </view>
   <!-- 下拉选项列表，使用 placement="top" 并适配自定义导航栏，使其在标题下方展开 -->
   <t-popup visible="{{visible}}" bind:visible-change="onVisibleChange" placement="top" using-custom-navbar="{{true}}">
     <view class="popup-content">
@@ -38,7 +35,6 @@
       </view>
     </view>
   </t-popup>
-  
   <!-- 时间筛选下拉菜单 -->
   <t-popup visible="{{timeFilterVisible}}" bind:visible-change="onTimeFilterVisibleChange" placement="top" using-custom-navbar="{{true}}">
     <view class="popup-content">
@@ -54,23 +50,20 @@
       </view>
     </view>
   </t-popup>
-
   <!-- 无数据状态提示 -->
   <view class="no-data-container" wx:if="{{!hasData && !loading}}">
     <t-empty icon="info-circle-filled" description="暂无排行榜数据" />
     <view class="no-data-tips">可以在"我的"页面上传排行榜数据</view>
   </view>
-
   <!-- Loading indicator -->
   <view class="loading-container" wx:if="{{loading}}">
     <t-loading theme="circular" size="48rpx" />
     <text class="loading-text">数据加载中...</text>
   </view>
-
-  <!-- 关键修改：使用wx:if而不是CSS类进行控制，通过key属性强制重新渲染 -->
+  <!-- 有数据状态 -->
   <block wx:if="{{hasData && !loading}}">
     <!-- 使用podiumVisible控制显示，并使用animationKey强制重新渲染 -->
-    <view wx:if="{{podiumVisible}}" class="podium-container animate-in" data-key="{{animationKey}}">
+    <view wx:if="{{podiumVisible}}" class="podium-container" data-key="{{animationKey}}">
       <!-- Second place - left -->
       <view class="podium-item second">
         <view class="rank-avatar">
@@ -82,49 +75,53 @@
           <view class="podium-value" wx:if="{{rankings.length > 1}}">{{rankings[1].value}}</view>
         </view>
       </view>
-
-      <!-- First place - middle (taller) -->
-      <view class="podium-item first">
-        <view class="rank-avatar">
-          <t-avatar wx:if="{{rankings.length > 0}}" image="{{rankings[0].avatar}}" size="large"></t-avatar>
-        </view>
-        <view class="podium-block">
-          <view class="podium-number">1</view>
-          <view class="podium-name" wx:if="{{rankings.length > 0}}">{{rankings[0].name}}</view>
-          <view class="podium-value" wx:if="{{rankings.length > 0}}">{{rankings[0].value}}</view>
-        </view>
-      </view>
-
-      <!-- Third place - right -->
-      <view class="podium-item third">
-        <view class="rank-avatar">
-          <t-avatar wx:if="{{rankings.length > 2}}" image="{{rankings[2].avatar}}" size="large"></t-avatar>
-        </view>
-        <view class="podium-block">
-          <view class="podium-number">3</view>
-          <view class="podium-name" wx:if="{{rankings.length > 2}}">{{rankings[2].name}}</view>
-          <view class="podium-value" wx:if="{{rankings.length > 2}}">{{rankings[2].value}}</view>
-        </view>
-      </view>
+  <!-- First place - middle (taller) -->
+  <view class="podium-item first">
+    <view class="rank-avatar">
+      <t-avatar wx:if="{{rankings.length > 0}}" image="{{rankings[0].avatar}}" size="large"></t-avatar>
     </view>
-
-    <!-- 排名列表也添加key属性实现强制重新渲染 -->
-    <view class="rankings-list animate-in" data-key="{{animationKey}}">
-      <t-cell-group>
-        <t-cell
-          wx:for="{{rankings}}"
-          wx:key="index"
-          wx:if="{{index > 2}}"
-          hover
-          bordered="{{index !== rankings.length - 1}}"
-        >
-          <view slot="left-icon" class="rank-number">{{index + 1}}</view>
-          <view slot="title" class="rank-name">{{item.name}}</view>
-          <view slot="description" class="rank-value">{{rankingType}}: {{item.value}}</view>
-          <t-avatar slot="right-icon" image="{{item.avatar}}" size="small"></t-avatar>
-        </t-cell>
-      </t-cell-group>
+    <view class="podium-block">
+      <view class="podium-number">1</view>
+      <view class="podium-name" wx:if="{{rankings.length > 0}}">{{rankings[0].name}}</view>
+      <view class="podium-value" wx:if="{{rankings.length > 0}}">{{rankings[0].value}}</view>
     </view>
+  </view>
+
+  <!-- Third place - right -->
+  <view class="podium-item third">
+    <view class="rank-avatar">
+      <t-avatar wx:if="{{rankings.length > 2}}" image="{{rankings[2].avatar}}" size="large"></t-avatar>
+    </view>
+    <view class="podium-block">
+      <view class="podium-number">3</view>
+      <view class="podium-name" wx:if="{{rankings.length > 2}}">{{rankings[2].name}}</view>
+      <view class="podium-value" wx:if="{{rankings.length > 2}}">{{rankings[2].value}}</view>
+    </view>
+  </view>
+</view>
+
+<!-- 排名列表使用listVisible控制显示隐藏，同时确保四名以后的数据能显示 -->
+<view wx:if="{{listVisible && rankings.length > 3}}" class="rankings-list" data-key="{{listAnimationKey}}">
+  <t-cell-group>
+    <t-cell
+      wx:for="{{rankings}}"
+      wx:key="index"
+      wx:if="{{index > 2}}"
+      hover
+      bordered="{{index !== rankings.length - 1}}"
+    >
+      <view slot="left-icon" class="rank-number">{{index + 1}}</view>
+      <view slot="title" class="rank-name">{{item.name}}</view>
+      <view slot="description" class="rank-value">{{rankingType}}: {{item.value}}</view>
+      <t-avatar slot="right-icon" image="{{item.avatar}}" size="small"></t-avatar>
+    </t-cell>
+  </t-cell-group>
+</view>
+
+<!-- 添加没有剩余排名的提示 -->
+<view wx:if="{{rankings.length <= 3}}" class="no-more-rankings">
+  <t-divider content="没有更多排名" />
+</view>
   </block>
 </view>
 <t-toast id="t-toast" />
